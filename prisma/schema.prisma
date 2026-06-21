@@ -1,0 +1,38 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Room {
+  id          String    @id @default(uuid())
+  name        String
+  floor       Int
+  capacity    Int
+  type        String
+  description String?   @default("")
+  amenities   String    // Stored as JSON string (e.g. '["WiFi", "Projector"]') to support SQLite and Postgres easily
+  status      String    // "available" | "maintenance" | "inactive"
+  image       String?   @default("")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+}
+
+model Booking {
+  id           String   @id @default(uuid())
+  roomId       String
+  room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  organizer    String
+  title        String?  @default("")
+  date         String   // "YYYY-MM-DD"
+  timeStart    String   // "HH:MM"
+  timeEnd      String   // "HH:MM"
+  participants Int
+  status       String   // "confirmed" | "pending" | "cancelled"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
