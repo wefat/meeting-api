@@ -27,6 +27,7 @@ model Booking {
   roomId       String
   room         Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
   organizer    String
+  lineUserId   String?  // Optional field to store LINE User ID for LIFF bookings
   title        String?  @default("")
   date         String   // "YYYY-MM-DD"
   timeStart    String   // "HH:MM"

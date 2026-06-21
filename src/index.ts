@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 import roomRoutes from "./routes/room.routes";
 import bookingRoutes from "./routes/booking.routes";
 import dashboardRoutes from "./routes/dashboard.routes";
+import lineRoutes from "./routes/line";
 import { swaggerDocument } from "./swagger";
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use("/api/admin/rooms", roomRoutes);
 app.use("/api/admin/bookings", bookingRoutes);
 app.use("/api/admin/dashboard", dashboardRoutes);
+app.use("/api/line", lineRoutes);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
